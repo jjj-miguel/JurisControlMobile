@@ -1,8 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:teste1/About/About.dart';
 import 'package:teste1/Start/login.dart';
+
 class Start extends StatelessWidget {
   const Start({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +15,7 @@ class Start extends StatelessWidget {
           const Align(
             alignment:
             Alignment.topRight,
-            child: ImageTop(),
+              child: ImageTop(),
           ),
           const Align(
             alignment: Alignment
@@ -26,7 +29,9 @@ class Start extends StatelessWidget {
                 SizedBox(
                   child: Image.asset("images/logo.png"),
                 ),
+
                 const SizedBox(height: 50),
+
                 Container(
                   alignment: Alignment.center ,
                   padding: const EdgeInsets.only(top: 2.0),
@@ -38,6 +43,7 @@ class Start extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+
                 ),
                 const SizedBox(height: 170),
                 Container(
@@ -47,13 +53,17 @@ class Start extends StatelessWidget {
               ],
             ),
           )
+
+
         ],
       ),
     );
   }
 }
+
 class ImageTop extends StatelessWidget {
   const ImageTop({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -63,8 +73,10 @@ class ImageTop extends StatelessWidget {
     );
   }
 }
+
 class ImageDown extends StatelessWidget {
   const ImageDown({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -74,16 +86,20 @@ class ImageDown extends StatelessWidget {
     );
   }
 }
+
 class ContainerButton extends StatelessWidget{
   const ContainerButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     return
       ElevatedButton(
         onPressed: (
+
             ) {
-          Navigator.push(context, MaterialPageRoute(builder: (context) =>  LoginApp()),
-          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginApp()),);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor:const Color(0xFF030430),
@@ -93,6 +109,7 @@ class ContainerButton extends StatelessWidget{
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
+
         child: const Text("Entrar", style:TextStyle(color: Colors.white, fontWeight: FontWeight.normal, fontSize: 20)),
       );
   }
