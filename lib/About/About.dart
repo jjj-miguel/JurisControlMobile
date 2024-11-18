@@ -3,7 +3,6 @@ import 'package:teste1/timeLine/timeline.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 class About extends StatelessWidget {
   const About({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,12 +18,10 @@ class About extends StatelessWidget {
                 size: 20,
               ),
               onPressed: () {
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) =>  HomeScreen()),
-                  );
-
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>  HomeScreen()),
+                );
               },
             ),
           ],
