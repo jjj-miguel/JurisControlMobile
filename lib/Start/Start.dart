@@ -1,7 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:teste1/About/About.dart';
+<<<<<<< HEAD
 import 'package:teste1/Start/login.dart';
+=======
+import 'package:teste1/About/about_scrolling.dart';
+>>>>>>> a7e47482ceb5cbd10bbc4ad227b5dde3c8bd38c0
 
 class Start extends StatelessWidget {
   const Start({super.key});
@@ -95,11 +99,17 @@ class ContainerButton extends StatelessWidget{
     return
       ElevatedButton(
         onPressed: (
+<<<<<<< HEAD
 
             ) {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const LoginApp()),);
+=======
+            ) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) =>  scroll_1()),
+          );
+>>>>>>> a7e47482ceb5cbd10bbc4ad227b5dde3c8bd38c0
         },
         style: ElevatedButton.styleFrom(
           backgroundColor:const Color(0xFF030430),
