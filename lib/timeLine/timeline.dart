@@ -1,106 +1,137 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:teste1/timeLine//TimeLineTileUI.dart';
+import 'package:timelines/timelines.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class TimelineExample extends StatefulWidget {
+  const TimelineExample({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  _TimelineExampleState createState() => _TimelineExampleState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _TimelineExampleState extends State<TimelineExample> {
+  int _selectedIndex = -1; // Índice do card selecionado (-1 significa nenhum)
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFFFFFFFF),
-      appBar: AppBar(
-        title: const Text(
-          'Processos',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Color(0xFFFFFFFF), // Cor personalizada
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Processos',
+            style: TextStyle(color: Colors.white), // Cor do texto
           ),
-
+          backgroundColor: Color(0xFF030430), // Cor de fundo ajustada
+          centerTitle: true, // Centraliza o título
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: Colors.white), // Cor da seta para voltar
+            onPressed: () {
+              Navigator.pop(context); // Volta para a tela anterior
+            },
+          ),
         ),
-        centerTitle: true,
-        backgroundColor: Color(0xFF030430),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 30.0, right: 30.0),
-        child: ListView(
-          children: const [
-            TimeLineTileUI(isFirst: true, isLast: false, isPast: true,
-              eventChild: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        body: SingleChildScrollView(
+          child: FixedTimeline.tileBuilder(
+            theme: TimelineThemeData(
+              nodePosition: 0.05,
+              connectorTheme: ConnectorThemeData(thickness: 4),
+            ),
+            builder: TimelineTileBuilder.connected(
+              itemCount: 20,
+              connectorBuilder: (_, __, ___) =>
+                  SolidLineConnector(color: Color(0xFF14165A)),
+              indicatorBuilder: (_, index) => Stack(
+                alignment: Alignment.center,
                 children: [
-                  Row(
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _selectedIndex == index
+                          ? Colors.white // Bola amarela se selecionada
+                          : Colors.white, // Bola azul padrão
+                    ),
+                  ),
+                  Icon(
+                    Icons.circle, // Ícone a ser exibido dentro da bola
+                    size: 28,
+                    color: _selectedIndex == index
+                        ? Colors.yellowAccent // Cor do ícone quando selecionado
+                        : Color(0xFF14165A), // Cor do ícone padrão
+                  ),
+                ],
+              ),
+              contentsBuilder: (_, index) => GestureDetector(
+                onTap: () {
+                  setState(() {
+                    // Atualiza o índice do item selecionado
+                    _selectedIndex = _selectedIndex == index ? -1 : index;
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(Icons.book_online, color: Colors.green),
-                      SizedBox(width: 15.0,),
-                      Text(
-                        'Order Placed.',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                      SizedBox(width: 20),
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: BoxDecoration(
+                            color: _selectedIndex == index
+                                ? Colors.white
+                                : Colors.white,
+                            borderRadius: BorderRadius.circular(12.0),
+                            border: Border.all(
+                              color: _selectedIndex == index
+                                  ? Colors.blue
+                                  : Color(0xFF14165A),
+                              width: 2,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 4,
+                                offset: Offset(2, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Conclusos os autos para despacho (genérica) a Daniele Pimentel de Lira - Item ${index + 1}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '29/10/2024',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  Icon(Icons.check_circle,
+                                      color: Colors.green, size: 20),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                  Text('Your order is placed successfully. It is yet to be packed & shipped.', style: TextStyle(color: Colors.black),),
-                ],
+                ),
               ),
             ),
-            TimeLineTileUI(isFirst: false, isLast: false, isPast: true, eventChild: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.card_giftcard, color: Colors.green),
-                    SizedBox(width: 15.0,),
-                    Text(
-                      'Order Is Packed',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
-                    ),
-                  ],
-                ),
-                Text('Your order is packed & ready to dispatch from our warehouse.', style: TextStyle(color: Colors.black),),
-              ],
-            ),),
-            TimeLineTileUI(isFirst: false, isLast: false, isPast: true, eventChild: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.local_shipping, color: Colors.green),
-                    SizedBox(width: 15.0,),
-                    Text(
-                      'Order Dispatched',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
-                    ),
-                  ],
-                ),
-                Text('Your order is dispatched from our warehouse, it will take 5-7 working days for you to get the delivery.',
-                  style: TextStyle(color: Colors.black),
-                ),
-              ],
-            ),),
-            TimeLineTileUI(isFirst: false, isLast: true, isPast: true, eventChild: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.home_work, color: Colors.green),
-                    SizedBox(width: 15.0,),
-                    Text(
-                      'Order Delivery',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
-                    ),
-                  ],
-                ),
-                Text('You will get your order on 8th of December, please be available at your address to receive the order.',
-                  style: TextStyle(color: Colors.black),
-                ),
-              ],
-            ),),
-          ],
+          ),
         ),
       ),
     );

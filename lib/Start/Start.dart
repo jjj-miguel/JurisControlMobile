@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:teste1/About/About.dart';
 import 'package:teste1/Start/login.dart';
+import 'package:teste1/timeLine/timeline.dart';
 
 class Start extends StatelessWidget {
   const Start({super.key});
@@ -99,7 +100,7 @@ class ContainerButton extends StatelessWidget{
             ) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const LoginApp()),);
+            MaterialPageRoute(builder: (context) =>  TimelineExample()),);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor:const Color(0xFF030430),
