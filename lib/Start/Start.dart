@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:teste1/About/About.dart';
+import 'package:teste1/Start/cadastro.dart';
 import 'package:teste1/Start/login.dart';
 import 'package:teste1/timeLine/timeline.dart';
 
@@ -100,7 +101,7 @@ class ContainerButton extends StatelessWidget{
             ) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) =>  TimelineExample()),);
+            MaterialPageRoute(builder: (context) =>  CadastroScreen()),);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor:const Color(0xFF030430),

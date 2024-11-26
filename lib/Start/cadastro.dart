@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CadastroScreen extends StatelessWidget {
+   CadastroScreen({super.key});
+
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _cpfController = TextEditingController();
