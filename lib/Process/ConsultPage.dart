@@ -128,10 +128,6 @@ class MyMenuButton extends State<MenuButton> {
                   const SizedBox(height: 15),
                   const Divider(height: 1),
                   const SizedBox(height: 15),
-                  //ListTile(
-                    //leading: IconButton(onPressed: () {}, icon: const Icon(Icons.people), color: const Color(0xFF030430), style: const ButtonStyle(overlayColor: WidgetStatePropertyAll(Colors.transparent))),
-                    //title: const Text("Perfil", style: TextStyle(color: Color(0xFF030430), fontSize: 18, fontWeight: FontWeight.bold))
-                  //),
                   InkWell(
                     onTap: () {},
                     child: Row(
