@@ -27,6 +27,7 @@ class LoginScreen extends StatelessWidget {
     if (email.isNotEmpty && senha.isNotEmpty) {
       // URL da API e Token
       final String apiUrl = 'https://api.baserow.io/api/database/rows/table/402640/?user_field_names=true';
+      // token da API
       final String apiToken = 'mK1hTBbMzDoQFHMcupCEDVg4ctfIPjF7';
 
       try {
@@ -44,9 +45,11 @@ class LoginScreen extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Login realizado com sucesso!')),
             );
-            // Navegar para a página About
+            // Navegar para a página About.
             Navigator.push(context,
-              MaterialPageRoute(builder: (context) => About()),);
+              MaterialPageRoute(builder: 
+                (context) => About()),
+              );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Credenciais inválidas! Tente novamente.')),
