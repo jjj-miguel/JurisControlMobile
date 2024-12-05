@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:teste1/Process/ConsultPage.dart';
+import 'package:teste1/Profile/profile.dart';
+import 'package:teste1/SecoesdeProcessos/consultaPersonalizada.dart';
 import 'package:teste1/Start/Start.dart';
+import 'package:teste1/Start/login.dart';
 
 void main() => runApp(const MainApp());
 
@@ -18,8 +22,9 @@ class MainAppState extends State<MainApp> {
       initialRoute: '/',
       routes: {
         '/': (context) => const Start(),
-        //'/profile': (context) => const Profile(),
-        //'/minhaConta': (context) => const MinhaConta()
+        '/login': (context) => LoginApp(),
+        '/profile': (context) => ProfileScreen(),
+        '/consult': (context) => const ConsultPage()
       },
     );
   }

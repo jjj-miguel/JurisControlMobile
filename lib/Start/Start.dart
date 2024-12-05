@@ -101,7 +101,7 @@ class ContainerButton extends StatelessWidget{
             ) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) =>  CadastroScreen()),);
+            MaterialPageRoute(builder: (context) =>  LoginScreen()),);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor:const Color(0xFF030430),

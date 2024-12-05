@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:teste1/About/About.dart';
+import 'package:teste1/Start/cadastro.dart';
 
 class LoginApp extends StatelessWidget {
   const LoginApp({Key? key}) : super(key: key);
@@ -17,12 +20,60 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  Future<void> loginUser(BuildContext context) async {
+    final String email = _usernameController.text;
+    final String senha = _passwordController.text;
+
+    if (email.isNotEmpty && senha.isNotEmpty) {
+      // URL da API e Token
+      final String apiUrl = 'https://api.baserow.io/api/database/rows/table/402640/?user_field_names=true';
+      final String apiToken = 'mK1hTBbMzDoQFHMcupCEDVg4ctfIPjF7';
+
+      try {
+        final response = await http.get(
+          Uri.parse('$apiUrl&filter_field=Email&filterfield_value=$email&filterfield=Senha&filter_field_value=$senha'),
+          headers: {
+            'Authorization': 'Token $apiToken',
+            'Content-Type': 'application/json',
+          },
+        );
+
+        if (response.statusCode == 200) {
+          final data = json.decode(response.body);
+          if (data.isNotEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Login realizado com sucesso!')),
+            );
+            // Navegar para a página About
+            Navigator.push(context,
+              MaterialPageRoute(builder: (context) => About()),);
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Credenciais inválidas! Tente novamente.')),
+            );
+          }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Erro no servidor. Tente novamente mais tarde.')),
+          );
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro ao se conectar com o servidor.')),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Por favor, preencha todos os campos.')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF030430),
-
-    body: SafeArea(
+      body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -30,10 +81,10 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Logo ou ícone principal
-             Image.asset("images/Group.png"),
+                Image.asset("images/Group.png"),
                 const SizedBox(height: 30.0),
                 const SizedBox(height: 10.0),
-                Text(
+                const Text(
                   "Faça login para continuar",
                   style: TextStyle(
                     fontSize: 16,
@@ -45,12 +96,12 @@ class LoginScreen extends StatelessWidget {
                 // Campo de nome de usuário
                 TextField(
                   controller: _usernameController,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white, // Cor do texto digitado
                     fontSize: 16.0,
                   ),
                   decoration: InputDecoration(
-                    labelText: "Nome de usuário",
+                    labelText: "E-mail",
                     prefixIcon: Icon(Icons.person),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -63,13 +114,13 @@ class LoginScreen extends StatelessWidget {
                 TextField(
                   controller: _passwordController,
                   obscureText: true,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white, // Cor do texto digitado
                     fontSize: 16.0,
                   ),
                   decoration: InputDecoration(
                     labelText: "Senha",
-                    prefixIcon: Icon(Icons.lock),
+                    prefixIcon: const Icon(Icons.lock),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -84,7 +135,7 @@ class LoginScreen extends StatelessWidget {
                     onPressed: () {
                       // Lógica para "Esqueceu a senha"
                     },
-                    child: Text(
+                    child: const Text(
                       "Esqueceu a senha?",
                       style: TextStyle(color: Colors.blue),
                     ),
@@ -94,21 +145,7 @@ class LoginScreen extends StatelessWidget {
 
                 // Botão de login
                 ElevatedButton(
-                  onPressed: () {
-                    String username = _usernameController.text;
-                    String password = _passwordController.text;
-
-                    if (username.isNotEmpty && password.isNotEmpty) {
-                      // Navegar para a página About
-                      Navigator.push(context,
-                        MaterialPageRoute(builder: (context) =>  About()),);
-                    } else {
-                      // Mostrar erro
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Por favor, preencha os campos.')),
-                      );
-                    }
-                  },
+                  onPressed: () => loginUser(context),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 50.0),
                     shape: RoundedRectangleBorder(
@@ -116,7 +153,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     backgroundColor: Colors.white,
                   ),
-                  child: Text(
+                  child: const Text(
                     "Login",
                     style: TextStyle(fontSize: 18, color: Color(0xFF030430)),
                   ),
@@ -127,15 +164,17 @@ class LoginScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                        "Não tem uma conta? ",
-                    style: TextStyle(color: Colors.white),
+                    const Text(
+                      "Não tem uma conta? ",
+                      style: TextStyle(color: Colors.white),
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Lógica para redirecionar ao registro
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>  CadastroScreen()),);
                       },
-                      child: Text(
+                      child: const Text(
                         "Cadastre-se",
                         style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                       ),

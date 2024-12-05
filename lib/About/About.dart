@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teste1/Process/ConsultPage.dart';
 import 'package:teste1/timeLine/timeline.dart';
 
 class About extends StatelessWidget {
@@ -18,7 +19,9 @@ class About extends StatelessWidget {
               size: 20,
             ),
             onPressed: () {
-              Navigator.pushNamed(context, '/timeline');
+              Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>  ConsultPage()),);
             },
           ),
         ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:telaperfil/Profile/profile.dart';
+import 'package:teste1/Profile/profile.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});

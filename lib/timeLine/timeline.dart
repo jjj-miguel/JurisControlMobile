@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:timelines/timelines.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class TimelineExample extends StatefulWidget {
-  const TimelineExample({Key? key}) : super(key: key);
+  final int processoId;
+
+  const TimelineExample({Key? key, required this.processoId}) : super(key: key);
 
   @override
   _TimelineExampleState createState() => _TimelineExampleState();
@@ -10,6 +14,43 @@ class TimelineExample extends StatefulWidget {
 
 class _TimelineExampleState extends State<TimelineExample> {
   int _selectedIndex = -1; // Índice do card selecionado (-1 significa nenhum)
+  List<dynamic> timelineData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchTimelineData();
+  }
+
+  Future<void> fetchTimelineData() async {
+    final String apiUrl = 'https://api.baserow.io/api/database/rows/table/402642/?user_field_names=true';
+    final String apiToken = 'mK1hTBbMzDoQFHMcupCEDVg4ctfIPjF7';
+
+    try {
+      final response = await http.get(
+        Uri.parse('$apiUrl&filter_processoRelacionado_equals=${widget.processoId}'),
+        headers: {
+          'Authorization': 'Token $apiToken',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          timelineData = data['results'];
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro ao carregar a linha do tempo.')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao se conectar com o servidor.')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +77,7 @@ class _TimelineExampleState extends State<TimelineExample> {
               connectorTheme: ConnectorThemeData(thickness: 4),
             ),
             builder: TimelineTileBuilder.connected(
-              itemCount: 20,
+              itemCount: timelineData.length,
               connectorBuilder: (_, __, ___) =>
                   SolidLineConnector(color: Color(0xFF14165A)),
               indicatorBuilder: (_, index) => Stack(
@@ -100,7 +141,7 @@ class _TimelineExampleState extends State<TimelineExample> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Conclusos os autos para despacho (genérica) a Daniele Pimentel de Lira - Item ${index + 1}',
+                                timelineData[index]['Registro'] ?? 'Registro não disponível',
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.black,
@@ -112,7 +153,7 @@ class _TimelineExampleState extends State<TimelineExample> {
                                 MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    '29/10/2024',
+                                    timelineData[index]['Data'] ?? 'Data não disponível',
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.grey,

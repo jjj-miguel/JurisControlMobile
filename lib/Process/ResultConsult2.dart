@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ResultConsult2 extends StatefulWidget {
-  const ResultConsult2({super.key});
+  final Map<String, dynamic> data;
+
+  const ResultConsult2({super.key, required this.data});
 
   @override
   State<ResultConsult2> createState() => MyResultConsult();
@@ -33,7 +35,7 @@ class MyResultConsult extends State<ResultConsult2> {
                 const SizedBox(height: 50),
                 const Padding(
                   padding: EdgeInsets.only(left: 20),
-                  child: Text("Detalhes do Processo", style: TextStyle(color: Color(0xFF030430), fontSize: 25, fontWeight: FontWeight.bold))
+                  child: Text("Detalhes do Processo", style: TextStyle(color: Color(0xFF030430), fontSize: 25, fontWeight: FontWeight.bold)),
                 ),
                 const SizedBox(height: 50),
                 Container(
@@ -50,26 +52,28 @@ class MyResultConsult extends State<ResultConsult2> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 25),
-                        Secao(titulo: "Reclamante", conteudo: "Miguel da Silva Gomes"),
+                        Secao(titulo: "Número do Processo", conteudo: widget.data['numero'] ?? 'Não disponível'),
                         const SizedBox(height: 7),
-                        Secao(titulo: "Advogado do Reclamante", conteudo: "Carvalho da Silva"),
-                        const SizedBox(height: 16),
-                        Secao(titulo: "Reclamado", conteudo: "Mariana Queiroz"),
+                        Secao(titulo: "Reclamante", conteudo: widget.data['Reclamante'] ?? 'Não disponível'),
                         const SizedBox(height: 7),
-                        Secao(titulo: "Advogado do Reclamado", conteudo: "Maria Russa"),
+                        Secao(titulo: "Advogado do Reclamante", conteudo: widget.data['AdvogadoReclamante'] ?? 'Não disponível'),
                         const SizedBox(height: 16),
-                        Secao(titulo: "Tipo", conteudo: "Criminal"),
+                        Secao(titulo: "Reclamado", conteudo: widget.data['Reclamado'] ?? 'Não disponível'),
+                        const SizedBox(height: 7),
+                        Secao(titulo: "Advogado do Reclamado", conteudo: widget.data['AdvogadoReclamado'] ?? 'Não disponível'),
                         const SizedBox(height: 16),
-                        Secao(titulo: "Status", conteudo: "Andamento"),
+                        Secao(titulo: "Tipo", conteudo: widget.data['Tipo'] ?? 'Não disponível'),
+                        const SizedBox(height: 16),
+                        Secao(titulo: "Status", conteudo: widget.data['Status'] ?? 'Não disponível'),
                       ],
                     ),
-                  )
-                )
+                  ),
+                ),
               ],
             ),
-          )
+          ),
         ],
-      )
+      ),
     );
   }
 }
@@ -78,7 +82,7 @@ class Secao extends StatelessWidget {
   final String titulo;
   final String conteudo;
 
-  Secao({super.key, required this.titulo, required this.conteudo});
+  const Secao({super.key, required this.titulo, required this.conteudo});
 
   @override
   Widget build(BuildContext context) {
