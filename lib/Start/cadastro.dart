@@ -13,7 +13,7 @@ class CadastroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF030430), // Cor de fundo igual ao login
+      backgroundColor: Color(0xFF030430), 
 
       body: SafeArea(
         child: Center(
@@ -22,7 +22,7 @@ class CadastroScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Logo ou ícone principal
+                
                 Image.asset("images/Group.png"),
                 const SizedBox(height: 30.0),
                 const SizedBox(height: 10.0),
@@ -35,11 +35,11 @@ class CadastroScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 40.0),
 
-                // Campo Nome
+                
                 TextField(
                   controller: _nomeController,
                   style: TextStyle(
-                    color: Colors.white, // Cor do texto digitado
+                    color: Colors.white, 
                     fontSize: 16.0,
                   ),
                   decoration: InputDecoration(
@@ -52,11 +52,11 @@ class CadastroScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20.0),
 
-                // Campo Email
+                
                 TextField(
                   controller: _emailController,
                   style: TextStyle(
-                    color: Colors.white, // Cor do texto digitado
+                    color: Colors.white, 
                     fontSize: 16.0,
                   ),
                   decoration: InputDecoration(
@@ -69,11 +69,11 @@ class CadastroScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20.0),
 
-                // Campo CPF ou CNPJ
+                
                 TextField(
                   controller: _cpfController,
                   style: TextStyle(
-                    color: Colors.white, // Cor do texto digitado
+                    color: Colors.white, 
                     fontSize: 16.0,
                   ),
                   decoration: InputDecoration(
@@ -86,12 +86,12 @@ class CadastroScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20.0),
 
-                // Campo Senha
+                
                 TextField(
                   controller: _senhaController,
                   obscureText: true,
                   style: TextStyle(
-                    color: Colors.white, // Cor do texto digitado
+                    color: Colors.white, 
                     fontSize: 16.0,
                   ),
                   decoration: InputDecoration(
@@ -104,12 +104,12 @@ class CadastroScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20.0),
 
-                // Campo Confirmar Senha
+                
                 TextField(
                   controller: _confirmarSenhaController,
                   obscureText: true,
                   style: TextStyle(
-                    color: Colors.white, // Cor do texto digitado
+                    color: Colors.white, 
                     fontSize: 16.0,
                   ),
                   decoration: InputDecoration(
@@ -122,7 +122,7 @@ class CadastroScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20.0),
 
-                // Botão de Cadastro
+                
                 ElevatedButton(
                   onPressed: () {
                     String nome = _nomeController.text;
@@ -137,13 +137,13 @@ class CadastroScreen extends StatelessWidget {
                         senha.isNotEmpty &&
                         confirmarSenha.isNotEmpty &&
                         senha == confirmarSenha) {
-                      // Sucesso no cadastro, redirecionar ou mostrar mensagem
+                      
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                             content: Text('Cadastro realizado com sucesso!')),
                       );
                     } else {
-                      // Mostrar erro se os campos estiverem vazios ou senhas não coincidirem
+                      
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                             content: Text(
